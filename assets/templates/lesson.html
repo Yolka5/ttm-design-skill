@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en" data-kind="use">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gear ratios</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400..700&family=Newsreader:opsz,wght@6..72,400..600&display=swap">
+<!-- Lesson starter: rail, track, one step with a task, a reveal and a question.
+     Order for every step: explain, try, then the rule, then one question. -->
+<link rel="stylesheet" href="../tokens.css">
+<link rel="stylesheet" href="../controls.css">
+<style>
+  .lesson { display: grid; grid-template-columns: 14rem minmax(0, 1fr); gap: var(--space-2xl); max-width: 72rem; margin-inline: auto; padding: var(--space-2xl) max(16px, env(safe-area-inset-right, 0px)) var(--space-3xl) max(16px, env(safe-area-inset-left, 0px)); }
+  .rail .pick { width: 100%; }
+  .page { min-width: 0; max-width: 40rem; }
+  .page h1 { font-size: var(--text-h1); margin: 0 0 var(--space-lg); }
+  .page p { font-size: 1.125rem; line-height: 1.6; margin: 0 0 var(--space-md); }
+  .sim { display: grid; gap: var(--space-md); margin-block: var(--space-xl); padding: var(--space-lg); background: var(--surface-1); border-radius: var(--radius-shell); }
+  .check { margin-top: var(--space-2xl); padding-top: var(--space-xl); border-top: 1px solid var(--line); }
+  .check__q { font-weight: 600; margin: 0 0 var(--space-md); }
+  .track { margin-bottom: var(--space-xl); }
+  @media (max-width: 1079px) { .lesson { grid-template-columns: minmax(0, 1fr); } }
+</style>
+</head>
+<body class="tone-a">
+<div class="lesson">
+  <nav class="rail" aria-label="Steps">
+    <div class="picks picks--stack">
+      <a class="pick is-done" href="#"><span class="tick"></span>Speed and torque</a>
+      <a class="pick" href="#" aria-current="true"><span class="tick"></span>Gear ratios</a>
+      <a class="pick" href="#"><span class="tick"></span>Quiz</a>
+    </div>
+  </nav>
+  <main class="page">
+    <div class="track"><div class="track__segs"><button class="seg is-done" aria-label="Speed and torque"></button><button class="seg" aria-current="true" aria-label="Gear ratios"></button><button class="seg" aria-label="Quiz"></button></div></div>
+    <h1>What does a gear ratio trade?</h1>
+    <p>A motor spins fast but weakly. Gears swap some of that speed for force. Try it before reading on.</p>
+    <section class="sim" aria-label="Interactive">
+      <ul class="tasks"><li id="task"><span class="tick"></span><span>Move the ratio past 10 : 1 and watch both numbers.</span></li></ul>
+      <label class="ctl"><span class="ctl__top"><span class="ctl__name">Gear ratio</span><output class="ctl__val" id="r-out"></output></span><input id="r" type="range" min="1" max="15" step="0.5" value="3"></label>
+      <div class="stats"><div><span class="stat__l">Wheel speed</span><span class="stat__v" id="speed"></span></div><div><span class="stat__l">Wheel torque</span><span class="stat__v" id="torque"></span></div></div>
+    </section>
+    <div id="after" hidden><p>Speed goes down by the ratio and torque goes up by the same ratio. Power, speed times torque, stays the same.</p></div>
+    <button class="q-btn" id="show" type="button">Show me the rule</button>
+    <section class="check">
+      <p class="check__q">You double the ratio. What happens to the torque at the wheel?</p>
+      <div class="opts" id="opts">
+        <button class="opt" data-why="Speed halves. Torque does the opposite.">It halves</button>
+        <button class="opt" data-ok data-why="Torque scales with the ratio, ignoring losses.">It doubles</button>
+        <button class="opt" data-why="Gears always trade one for the other.">It stays the same</button>
+      </div>
+      <div class="why" id="why" hidden></div>
+    </section>
+  </main>
+</div>
+<script>
+  const $ = (id) => document.getElementById(id);
+  const free = 6000, stall = 7;
+  const reveal = () => { $('after').hidden = false; $('show').hidden = true; };
+  const update = () => {
+    const r = +$('r').value;
+    $('r-out').textContent = r + ' : 1';
+    $('r').style.setProperty('--p', ((r - 1) / 14) * 100 + '%');
+    $('speed').textContent = Math.round(free / r).toLocaleString('en-US') + ' rpm';
+    $('torque').textContent = (stall * r).toFixed(1) + ' N·m';
+    if (r > 10) { $('task').classList.add('is-done'); reveal(); }
+  };
+  $('r').addEventListener('input', update);
+  $('show').addEventListener('click', reveal);
+  $('opts').addEventListener('click', (e) => {
+    const b = e.target.closest('.opt');
+    if (!b) return;
+    const ok = b.hasAttribute('data-ok');
+    b.classList.add(ok ? 'is-right' : 'is-wrong');
+    $('why').hidden = false;
+    $('why').className = 'why' + (ok ? ' is-right' : '');
+    $('why').innerHTML = '<strong>' + (ok ? 'Right.' : 'Not quite.') + '</strong> ' + b.dataset.why;
+  });
+  update();
+</script>
+</body>
+</html>

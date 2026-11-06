@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="en" data-kind="show">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Halden Aero</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400..800&family=Instrument+Sans:wght@400..700&display=swap">
+<!-- Show starter: nav, opening, sheet stack, mosaic, atmosphere band, rows,
+     a light chapter, closing and footer. Order: loud, quiet, loud, quiet.
+     Replace every file in media/ with the brand's own pictures and set the
+     brand layer below. Delete any part the brief does not need.
+     For a single-file artifact, paste the CSS and JS inline instead of linking. -->
+<link rel="stylesheet" href="../tokens.css">
+<link rel="stylesheet" href="../motion/motion.css">
+<link rel="stylesheet" href="../show.css">
+<style>
+  :root {
+    /* Brand layer: this brand's values, not the library's. */
+    --brand-bg: #0a0b0d;
+    --brand-ink: #f2f1ec;
+    --brand-soft: #a3a39d;
+    --brand-accent: #9fb7c9;
+    --brand-accent-deep: #2f5874;
+    --brand-light: #eeede7;
+    --display-weight: 700;
+  }
+  .sheet { color: #fff; }
+  .sheet__inner { display: flex; align-items: flex-end; min-height: 100vh; padding-block: 7rem var(--show-band); }
+  .sheet__copy { max-width: 34rem; }
+  .sheet .s-h2 { margin-bottom: 1rem; }
+  .sheet p { margin: 0; color: rgba(255, 255, 255, 0.84); font-size: var(--show-lead); }
+</style>
+</head>
+<body class="show">
+
+<header class="s-nav" data-s-nav>
+  <div class="s-wrap s-nav__bar">
+    <a class="s-nav__brand" href="#">Halden</a>
+    <ul class="s-nav__links">
+      <li><a href="#aircraft">Aircraft</a></li>
+      <li><a href="#how">How we build</a></li>
+      <li><a href="#company">Company</a></li>
+    </ul>
+    <a class="btn btn--light" href="#contact">Talk to us</a>
+    <button class="s-nav__menu" type="button" data-s-menu>Menu</button>
+  </div>
+</header>
+<div class="s-nav__sheet" data-s-sheet>
+  <button class="s-nav__menu s-nav__close" type="button" data-s-close style="display:inline-flex">Close</button>
+  <a href="#aircraft">Aircraft</a>
+  <a href="#how">How we build</a>
+  <a href="#company">Company</a>
+  <a href="#contact">Talk to us</a>
+</div>
+
+<main>
+  <!-- Opening. data-place: bottom (default), left or center. -->
+  <section class="s-open" data-s-opening data-place="center">
+    <video class="s-media" autoplay muted loop playsinline poster="media/opening.jpg" aria-hidden="true">
+      <source src="media/opening.mp4" type="video/mp4">
+    </video>
+    <div class="s-scrim s-scrim--even"></div>
+    <div class="s-wrap s-open__copy">
+      <h1 class="s-statement">Aircraft that fly the missions nobody else will.</h1>
+      <div class="s-actions">
+        <a class="btn btn--light" href="#aircraft">See the aircraft</a>
+        <a class="btn btn--ghost" href="#how">How we build</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Story: three to five sheets, one idea each, each from its own direction. -->
+  <section class="stack" style="--count:3" id="how">
+    <div class="stack__track">
+      <div class="stack__pin">
+        <article class="sheet">
+          <img class="sheet__media" src="media/story-1.jpg" alt="">
+          <div class="s-scrim"></div>
+          <div class="s-wrap sheet__inner">
+            <div class="sheet__copy">
+              <h2 class="s-h2">Designed in one room</h2>
+              <p>Engineers, machinists and pilots sit at the same table.</p>
+            </div>
+          </div>
+        </article>
+        <article class="sheet" data-from="right">
+          <img class="sheet__media" src="media/story-2.jpg" alt="">
+          <div class="s-scrim"></div>
+          <div class="s-wrap sheet__inner">
+            <div class="sheet__copy">
+              <h2 class="s-h2">Built on our floor</h2>
+              <p>Every structural part is cut and checked in-house.</p>
+            </div>
+          </div>
+        </article>
+        <article class="sheet" data-from="bottom">
+          <img class="sheet__media" src="media/story-3.jpg" alt="">
+          <div class="s-scrim"></div>
+          <div class="s-wrap sheet__inner">
+            <div class="sheet__copy">
+              <h2 class="s-h2">Flown before it ships</h2>
+              <p>Forty hours on every airframe, logged and signed.</p>
+              <div class="s-actions">
+                <a class="btn btn--ghost" href="#contact" aria-label="Book a test flight"><span>Book</span><span class="btn__more" aria-hidden="true"><span> a test flight</span></span></a>
+              </div>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Proof: pictures with only their names. Shape tiles around the pictures. -->
+  <section class="s-chapter" data-tone="dark" id="aircraft" data-reveal>
+    <div class="s-wrap">
+      <div class="s-chapter__head reveal-item" style="--i:0">
+        <h2 class="s-h2">Aircraft</h2>
+        <div class="s-actions"><a class="btn btn--glass" href="#">Compare them</a></div>
+      </div>
+      <div class="s-mosaic reveal-item" style="--i:1">
+        <a class="s-tile s-tile--lead" href="#"><img src="media/tile-1.jpg" alt=""><p class="s-tile__name">Kestrel</p></a>
+        <a class="s-tile s-tile--tall" href="#"><img src="media/tile-2.jpg" alt=""><p class="s-tile__name">Osprey</p></a>
+        <a class="s-tile" href="#"><img src="media/tile-3.jpg" alt=""><p class="s-tile__name">Merlin</p></a>
+        <a class="s-tile" href="#"><img src="media/tile-4.jpg" alt=""><p class="s-tile__name">Harrier</p></a>
+        <a class="s-tile" href="#"><img src="media/tile-5.jpg" alt=""><p class="s-tile__name">Ground station</p></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Atmosphere band: the photo drifts, the copy sits in its empty side. -->
+  <section class="s-band parallax" data-parallax>
+    <img class="parallax__layer" data-parallax-layer src="media/band.jpg" alt="" style="object-position: 78% 30%">
+    <div class="s-scrim"></div>
+    <div class="s-wrap s-band__copy" data-reveal>
+      <h2 class="s-h2 reveal-item" style="--i:0">Made by people who fly</h2>
+      <p class="s-lead reveal-item" style="--i:1">Half the team holds a pilot's licence. It shows in the cockpit.</p>
+      <div class="s-actions reveal-item" style="--i:2">
+        <a class="btn btn--light" href="#company">Meet the team</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- A chapter on the middle ground: catalogue rows. -->
+  <section class="s-chapter" data-tone="mid" data-reveal>
+    <div class="s-wrap">
+      <div class="s-rows">
+        <a class="s-row reveal-item" style="--i:0" href="#">
+          <div><h2 class="s-row__name">Halden One</h2><p class="s-row__line">The factory that builds every airframe.</p></div>
+          <img class="s-row__media" src="media/row-1.jpg" alt="">
+        </a>
+        <a class="s-row reveal-item" style="--i:1" href="#">
+          <div><h2 class="s-row__name">Flight lab</h2><p class="s-row__line">Where each design is tested before it is built.</p></div>
+          <img class="s-row__media" src="media/row-2.jpg" alt="">
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- A light chapter, then the closing action. -->
+  <section class="s-chapter" data-tone="light" id="company" data-reveal>
+    <div class="s-wrap">
+      <h2 class="s-statement reveal-item" style="--i:0">Forty people. One hangar. <span class="s-accent">No outsourcing.</span></h2>
+      <p class="s-lead reveal-item" style="--i:1">We hire engineers, machinists and pilots to work side by side.</p>
+      <div class="s-actions reveal-item" style="--i:2">
+        <a class="btn btn--solid" href="#">See open roles</a>
+        <a class="btn btn--glass" href="#">About us</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="s-close" id="contact">
+    <div class="s-wrap">
+      <h2 class="s-h2">Tell us the mission.</h2>
+      <div class="s-actions">
+        <a class="btn btn--light" href="mailto:hello@example.com">Talk to us</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="s-footer">
+  <div class="s-wrap">
+    <div class="s-footer__top">
+      <a class="s-nav__brand" href="#">Halden</a>
+      <div class="s-footer__cols">
+        <nav class="s-footer__col" aria-label="Aircraft"><h2>Aircraft</h2><a href="#">Kestrel</a><a href="#">Osprey</a><a href="#">Merlin</a></nav>
+        <nav class="s-footer__col" aria-label="Company"><h2>Company</h2><a href="#">About</a><a href="#">Careers</a><a href="#">Press</a></nav>
+      </div>
+    </div>
+    <p class="s-footer__small">© 2026 Halden Aero</p>
+  </div>
+</footer>
+
+<script src="../motion/motion.js"></script>
+<script src="../show.js"></script>
+</body>
+</html>

@@ -1,0 +1,174 @@
+/* Shared tokens. Every part of the library reads these, which is what makes the
+   three modes feel like one product. Set them per project.
+
+   Fonts: <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400..700&family=Newsreader:opsz,wght@6..72,400..600&display=swap" rel="stylesheet"> */
+
+:root {
+  color-scheme: light dark;
+
+  /* One voice, one working face. */
+  --font-voice: 'Newsreader', Georgia, serif;
+  --font-work: 'Instrument Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  /* Depth comes from these steps, not shadows. */
+  --surface-0: #fbfbf9;
+  --surface-1: #f3f3ef;
+  --surface-2: #e9e9e4;
+  --surface-3: #dcdcd6;
+  --ink: #141413;
+  --ink-soft: #5f5f5a;
+  --line: rgba(0, 0, 0, 0.09);
+  --main: #141413;
+  --on-main: #fbfbf9;
+
+  /* Meaning colours. Use up to three, and only in content. */
+  --meaning-a: #1f6feb;
+  --meaning-a-soft: #e4eefd;
+  --meaning-b: #7a3fe0;
+  --meaning-b-soft: #efe8fd;
+  --meaning-c: #d33a28;
+  --meaning-c-soft: #fdeae7;
+  --on-meaning: #ffffff;
+
+  /* Status colours. Separate from meaning colours, and only for what they say:
+     danger for deleting and errors, success for done and added, warning for check this.
+     Pale -soft with -text for status that informs. Solid fill with --on-* only on
+     the one control that confirms. */
+  --danger: #c4372c;
+  --danger-text: #b1271d;
+  --danger-soft: #fdecea;
+  --on-danger: #ffffff;
+  --success: #1e7a43;
+  --success-text: #1b6e3c;
+  --success-soft: #e3f3e8;
+  --on-success: #ffffff;
+  --warning: #e7b416;
+  --warning-text: #7f5400;
+  --warning-soft: #fcf1d4;
+  --on-warning: #141413;
+
+  /* Sizes come from these steps, so pages do not invent their own. */
+  --space-xs: 0.25rem;
+  --space-sm: 0.5rem;
+  --space-md: 0.75rem;
+  --space-lg: 1rem;
+  --space-xl: 1.5rem;
+  --space-2xl: 2.5rem;
+  --space-3xl: 4rem;
+  --h-control: 2.5rem;
+
+  --text-caption: 0.8125rem;
+  --text-small: 0.875rem;
+  --text-body: 1rem;
+  --text-prose: 1.1875rem;
+  --text-h3: 1.25rem;
+  --text-h2: clamp(1.625rem, 3vw, 2rem);
+  --text-h1: clamp(2.125rem, 4.6vw, 3rem);
+  --text-display: clamp(3rem, 9vw, 6rem);
+
+  --dur-press: 120ms;
+  --dur-fast: 160ms;
+  --dur-base: 220ms;
+  --dur-slow: 400ms;
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+
+  /* Only for things that float above content: menus, popovers, dialogs. */
+  --surface-float: #ffffff;
+  --shadow-float: 0 8px 24px rgba(0, 0, 0, 0.12), 0 2px 6px rgba(0, 0, 0, 0.08);
+
+  --radius-control: 10px;
+  --radius-panel: 16px;
+  --radius-shell: 24px;
+  --radius-pill: 999px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --surface-0: #0c0c0c;
+    --surface-1: #151515;
+    --surface-2: #303030;
+    --surface-3: #4f4f4f;
+    --ink: #efefef;
+    --ink-soft: #a3a3a3;
+    --line: rgba(255, 255, 255, 0.1);
+    --main: #efefef;
+    --on-main: #141413;
+    --meaning-a: #6ba6ff;
+    --meaning-a-soft: #16263f;
+    --meaning-b: #b08cff;
+    --meaning-b-soft: #241a3d;
+    --meaning-c: #ff7d6b;
+    --meaning-c-soft: #351a16;
+--on-meaning: #0c0c0c;
+    --danger: #c23a2f;
+    --danger-text: #ff8d80;
+    --danger-soft: #3a1a17;
+    --success: #3fb26a;
+    --success-text: #6fd496;
+    --success-soft: #12301e;
+    --on-success: #0c0c0c;
+    --warning-text: #f0c24b;
+    --warning-soft: #3a2e0d;
+    --shadow-float: 0 8px 24px rgba(0, 0, 0, 0.5), 0 2px 6px rgba(0, 0, 0, 0.4);
+    --surface-float: #232323;
+  }
+}
+
+:root[data-theme='dark'] {
+  --surface-0: #0c0c0c;
+  --surface-1: #151515;
+  --surface-2: #303030;
+  --surface-3: #4f4f4f;
+  --ink: #efefef;
+  --ink-soft: #a3a3a3;
+  --line: rgba(255, 255, 255, 0.1);
+  --main: #efefef;
+  --on-main: #141413;
+  --meaning-a: #6ba6ff;
+  --meaning-a-soft: #16263f;
+  --meaning-b: #b08cff;
+  --meaning-b-soft: #241a3d;
+  --meaning-c: #ff7d6b;
+  --meaning-c-soft: #351a16;
+--on-meaning: #0c0c0c;
+  --danger: #c23a2f;
+  --danger-text: #ff8d80;
+  --danger-soft: #3a1a17;
+  --success: #3fb26a;
+  --success-text: #6fd496;
+  --success-soft: #12301e;
+  --on-success: #0c0c0c;
+  --warning-text: #f0c24b;
+  --warning-soft: #3a2e0d;
+  --shadow-float: 0 8px 24px rgba(0, 0, 0, 0.5), 0 2px 6px rgba(0, 0, 0, 0.4);
+    --surface-float: #232323;
+}
+
+img,
+video {
+  max-width: 100%;
+  height: auto;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+body {
+  margin: 0;
+  color: var(--ink);
+  background: var(--surface-0);
+  font-family: var(--font-work);
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Serif speaks: page titles and big moments. Sans works: everything you operate. */
+h1,
+.voice {
+  font-family: var(--font-voice);
+  font-weight: 500;
+  letter-spacing: -0.015em;
+  line-height: 1.08;
+}

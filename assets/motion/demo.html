@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en" data-smooth-wheel="12">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Motion Kit Demo</title>
+<link rel="stylesheet" href="motion.css">
+<style>
+  :root { --ink: #0f1113; --paper: #f6f6f4; }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; font-family: system-ui, -apple-system, 'Segoe UI', sans-serif; color: var(--ink); background: var(--paper); line-height: 1.55; }
+  h1, h2 { margin: 0 0 0.75rem; line-height: 1.02; letter-spacing: -0.01em; font-weight: 800; font-size: clamp(2.2rem, 5.8vw, 3.75rem); }
+  p { margin: 0 0 1.25rem; max-width: 34rem; }
+  .wrap { width: min(70rem, 100% - 3rem); margin-inline: auto; }
+  .actions { display: flex; flex-wrap: wrap; gap: 0.85rem; }
+
+  .sheet { color: #fff; }
+  .sheet__inner { position: relative; display: flex; align-items: center; min-height: 100vh; padding: 5rem 0; }
+  .sheet__copy { max-width: 36rem; }
+  .media-a { background: radial-gradient(90% 70% at 72% 28%, #8d7a5c, transparent), linear-gradient(160deg, #39424f, #14161a); }
+  .media-b { background: radial-gradient(70% 80% at 25% 70%, #3f6d78, transparent), linear-gradient(200deg, #1b2730, #0c1014); }
+  .media-c { background: radial-gradient(80% 70% at 80% 75%, #a4553a, transparent), linear-gradient(140deg, #2b1e1a, #100c0b); }
+  .media-d { background: radial-gradient(90% 80% at 50% 30%, #5d6a4b, transparent), linear-gradient(180deg, #20261c, #0d0f0b); }
+
+  .chapter { padding: 7rem 0; }
+  .chapter--split { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; }
+  .frame { height: 26rem; border-radius: 20px; }
+  .frame__art { background: repeating-linear-gradient(0deg, #c9c7bf 0 2px, transparent 2px 46px), repeating-linear-gradient(90deg, #c9c7bf 0 2px, transparent 2px 46px), linear-gradient(170deg, #e4e2da, #b9b6aa); }
+  .art-a { background: linear-gradient(150deg, #cfd4da, #6f7a86); }
+  .art-b { background: linear-gradient(150deg, #dcd2c2, #8a745a); }
+
+  .beats__stage { position: relative; display: grid; place-items: center; height: 100%; text-align: center; }
+  [data-beats][data-mode='live'] [data-beat] { display: grid; place-content: center; justify-items: center; padding: 0 1.5rem; color: #fff; mix-blend-mode: difference; }
+  .big { font-size: clamp(3rem, 12vw, 9rem); font-weight: 800; line-height: 1; }
+
+  .stack[data-mode='static'] .sheet { min-height: 88vh; }
+  @media (max-width: 767px) {
+    .chapter--split { grid-template-columns: 1fr; }
+    .card-row { gap: 0.6rem; }
+    .frame { height: 18rem; }
+  }
+</style>
+</head>
+<body>
+
+<section class="stack">
+  <div class="stack__track">
+    <div class="stack__pin">
+      <article class="sheet">
+        <div class="sheet__media media-a"></div>
+        <div class="wrap sheet__inner">
+          <div class="glass-panel sheet__copy">
+            <h1>Sheets that cover each other</h1>
+            <p>The first sheet recedes as the next one slides over it. Scroll to see it.</p>
+            <div class="actions">
+              <a href="#cards" class="btn btn--light">Primary action</a>
+              <a href="#cards" class="btn btn--ghost">Second action</a>
+            </div>
+          </div>
+        </div>
+      </article>
+      <article class="sheet" data-from="bottom">
+        <div class="sheet__media media-b"></div>
+        <div class="wrap sheet__inner">
+          <div class="glass-panel sheet__copy">
+            <h2>This one came from below</h2>
+            <p>Its copy arrives after the sheet has mostly landed.</p>
+            <a href="#cards" class="btn btn--light">Keep going</a>
+          </div>
+        </div>
+      </article>
+      <article class="sheet" data-from="right">
+        <div class="sheet__media media-c"></div>
+        <div class="wrap sheet__inner">
+          <div class="sheet__copy">
+            <h2>This one came from the right</h2>
+            <p>Hover the second button to see it open.</p>
+            <div class="actions">
+              <a href="#cards" class="btn btn--ghost">More detail</a>
+              <a href="#cards" class="btn btn--ghost" aria-label="Order the product"><span>Order</span><span class="btn__more" aria-hidden="true"><span> the product</span></span></a>
+            </div>
+          </div>
+        </div>
+      </article>
+      <article class="sheet" data-from="left">
+        <div class="sheet__media media-d"></div>
+        <div class="wrap sheet__inner">
+          <div class="glass-panel glass-panel--light sheet__copy">
+            <h2>And this one from the left</h2>
+            <p>Each sheet picks its direction with one attribute.</p>
+            <a href="#cards" class="btn btn--solid">Last action</a>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="chapter" data-reveal>
+  <div class="wrap chapter--split">
+    <div>
+      <h2 class="reveal-item" style="--i:0">A section that builds in</h2>
+      <p class="reveal-item" style="--i:1">Everything here is tied to scroll position, so it plays backwards when you scroll up.</p>
+      <div class="actions reveal-item" style="--i:2">
+        <a href="#cards" class="btn btn--solid">Solid button</a>
+        <a href="#cards" class="btn btn--glass">Glass button</a>
+      </div>
+    </div>
+    <div class="parallax frame" data-parallax>
+      <div class="parallax__layer frame__art" data-parallax-layer></div>
+    </div>
+  </div>
+</section>
+
+<section class="chapter" id="cards" data-reveal>
+  <div class="wrap">
+    <h2 class="reveal-item" style="--i:0">Tilted card row</h2>
+    <p class="reveal-item" style="--i:1">Hover a card for the lift, the zoom and the sweep of light.</p>
+    <div class="card-row">
+      <figure class="card">
+        <div class="card__frame"><div class="art-a" style="height:100%"></div></div>
+        <figcaption class="card__caption">First entry</figcaption>
+      </figure>
+      <figure class="card">
+        <div class="card__frame"><div class="art-b" style="height:100%"></div></div>
+        <figcaption class="card__caption">Second entry</figcaption>
+      </figure>
+      <a href="#cards" class="card card--locked">
+        <div class="card__frame">
+          <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 018 0v3"/></svg>
+          <strong>+25 more</strong>
+        </div>
+        <span class="card__caption">Access by request</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section data-beats data-curtain="0.3,0.42,0.72,0.84">
+  <div class="beats__pin">
+    <div class="beats__stage">
+      <div class="curtain"></div>
+      <article data-beat>
+        <h2 class="letters big">Pinned story</h2>
+        <p class="beat-part" style="--i:1">The headline flips up letter by letter.</p>
+      </article>
+      <article data-beat>
+        <div class="big"><span data-count="1240">1,240</span></div>
+        <p class="beat-part" style="--i:1">Numbers count up as the beat arrives.</p>
+      </article>
+      <article data-beat>
+        <h2 class="letters big">Last beat holds</h2>
+        <p class="beat-part" style="--i:1">It stays until the section scrolls away.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="chapter" data-reveal>
+  <div class="wrap">
+    <h2 class="reveal-item" style="--i:0">End of the page</h2>
+    <p class="reveal-item" style="--i:1">Plain content after the pinned sections, to prove the page flows normally again.</p>
+  </div>
+</section>
+
+<script src="motion.js"></script>
+</body>
+</html>

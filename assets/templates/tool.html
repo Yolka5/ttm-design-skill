@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en" data-kind="use">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wheel speed</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400..700&family=Newsreader:opsz,wght@6..72,400..600&display=swap">
+<!-- Tool mode starter. For a single-file artifact, paste tokens.css, the parts of
+     controls.css you use, and menu.js inline instead of linking them. -->
+<link rel="stylesheet" href="../tokens.css">
+<link rel="stylesheet" href="../controls.css">
+<style>
+  .app { max-width: 56rem; margin-inline: auto; padding: var(--space-2xl) max(16px, env(safe-area-inset-right, 0px)) var(--space-3xl) max(16px, env(safe-area-inset-left, 0px)); }
+  .app h1 { font-size: var(--text-h1); margin: 0 0 var(--space-xl); }
+  .grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr); gap: var(--space-xl); align-items: start; }
+  .panel { display: grid; gap: var(--space-lg); padding: var(--space-xl); background: var(--surface-1); border-radius: var(--radius-shell); }
+  .answer { font-family: var(--font-voice); font-size: var(--text-display); line-height: 1; font-variant-numeric: tabular-nums; }
+  .unit { font-family: var(--font-work); font-size: var(--text-h3); color: var(--ink-soft); }
+  .assume { font-size: var(--text-small); color: var(--ink-soft); }
+  label.field-label { display: grid; gap: var(--space-xs); font-size: var(--text-small); color: var(--ink-soft); }
+  @media (max-width: 719px) { .grid { grid-template-columns: minmax(0, 1fr); } }
+</style>
+</head>
+<body>
+<main class="app">
+  <h1>Wheel speed</h1>
+  <div class="grid">
+    <section class="panel" aria-label="Inputs">
+      <div class="field-label">Motor
+        <div class="drop drop--wide" data-drop id="motor">
+          <button class="drop__trigger" type="button"><span class="drop__value">Kraken X60</span></button>
+          <div class="drop__menu">
+            <button class="drop__item" data-value="6000" aria-selected="true"><span class="drop__text">Kraken X60<span class="drop__desc">6,000 rpm free speed</span></span></button>
+            <button class="drop__item" data-value="5676"><span class="drop__text">NEO<span class="drop__desc">5,676 rpm free speed</span></span></button>
+            <button class="drop__item" data-value="6380"><span class="drop__text">Falcon 500<span class="drop__desc">6,380 rpm free speed</span></span></button>
+          </div>
+        </div>
+      </div>
+      <label class="ctl"><span class="ctl__top"><span class="ctl__name">Gear ratio</span><output class="ctl__val" id="ratio-out"></output></span><input id="ratio" type="range" min="3" max="12" step="0.05" value="6.75"></label>
+      <label class="field-label">Wheel diameter
+        <select class="select" id="wheel"><option value="3">3 in</option><option value="4" selected>4 in</option><option value="6">6 in</option></select>
+      </label>
+    </section>
+    <section class="panel" aria-live="polite">
+      <div><span class="answer" id="answer">0</span> <span class="unit">m/s</span></div>
+      <div class="stats">
+        <div><span class="stat__l">Wheel speed</span><span class="stat__v" id="rpm"></span></div>
+        <div><span class="stat__l">In km/h</span><span class="stat__v" id="kmh"></span></div>
+      </div>
+      <p class="assume">Free speed with no load or losses. Real robots reach about 80% of this.</p>
+    </section>
+  </div>
+</main>
+<script src="../menu.js"></script>
+<script>
+  let motor = 6000;
+  const $ = (id) => document.getElementById(id);
+  const update = () => {
+    const ratio = +$('ratio').value, wheel = +$('wheel').value * 0.0254;
+    const rpm = motor / ratio, ms = (rpm / 60) * Math.PI * wheel;
+    $('ratio-out').textContent = ratio.toFixed(2) + ' : 1';
+    $('ratio').style.setProperty('--p', ((ratio - 3) / 9) * 100 + '%');
+    $('answer').textContent = ms.toFixed(2);
+    $('rpm').textContent = Math.round(rpm).toLocaleString('en-US') + ' rpm';
+    $('kmh').textContent = (ms * 3.6).toFixed(1) + ' km/h';
+  };
+  $('motor').addEventListener('change', (e) => { motor = +e.detail.value; update(); });
+  $('ratio').addEventListener('input', update);
+  $('wheel').addEventListener('change', update);
+  update();
+</script>
+</body>
+</html>

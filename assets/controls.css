@@ -1,0 +1,881 @@
+/* Quiet controls for Tool and Read mode. Needs tokens.css.
+   Rank comes from brightness, not borders, shadows or gradients. */
+
+/* ===== Buttons ===== */
+.q-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 2.5rem;
+  padding: 0.5rem 1rem;
+  font: inherit;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: var(--ink);
+  text-decoration: none;
+  background: var(--surface-2);
+  border: 0;
+  border-radius: var(--radius-control);
+  cursor: pointer;
+  transition: background 120ms ease, transform 120ms ease-out;
+}
+
+/* One per view. */
+.q-btn--main {
+  color: var(--on-main);
+  background: var(--main);
+}
+
+.q-btn--wide {
+  width: 100%;
+}
+
+.q-btn:active {
+  transform: scale(0.97);
+}
+
+.q-btn:focus-visible,
+.pick:focus-visible,
+.field:focus-visible,
+.select:focus-visible,
+.drop__trigger:focus-visible {
+  outline: 2px solid var(--meaning-a);
+  outline-offset: 2px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .q-btn:hover {
+    background: var(--surface-3);
+  }
+
+  .q-btn--main:hover {
+    background: var(--main);
+    opacity: 0.88;
+  }
+
+  .pick:not([aria-selected='true'], [aria-current='true'], [aria-checked='true']):hover {
+    background: var(--surface-1);
+  }
+
+  .link-card:hover .link-card__art {
+    transform: scale(1.04);
+  }
+}
+
+/* ===== Selection =====
+   One move everywhere: the chosen item gets a rounded fill, the rest stay bare.
+   Works on tabs, menus, settings lists and search results. */
+.picks {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.picks--stack {
+  flex-direction: column;
+}
+
+.pick {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.4rem 0.75rem;
+  font: inherit;
+  font-size: 0.9375rem;
+  color: var(--ink-soft);
+  text-align: left;
+  text-decoration: none;
+  background: transparent;
+  border: 0;
+  border-radius: var(--radius-control);
+  cursor: pointer;
+}
+
+.pick[aria-selected='true'],
+.pick[aria-current='true'],
+.pick[aria-checked='true'] {
+  color: var(--ink);
+  background: var(--surface-2);
+}
+
+.pick__end {
+  margin-left: auto;
+}
+
+/* ===== Menu ===== */
+.menu {
+  padding: 0.35rem;
+  background: var(--surface-1);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-panel);
+}
+
+/* ===== Inputs ===== */
+.field {
+  width: 100%;
+  min-height: 2.5rem;
+  padding: 0.5rem 0.75rem;
+  font: inherit;
+  font-size: 0.9375rem;
+  color: var(--ink);
+  background: var(--surface-1);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-control);
+}
+
+.field::placeholder {
+  color: var(--ink-soft);
+}
+
+/* ===== Sign-in shell =====
+   Keep the buttons grey so a provider's logo is the only colour on screen. */
+.shell {
+  display: grid;
+  gap: 0.75rem;
+  padding: 1.75rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-shell);
+}
+
+.shell__or {
+  font-size: 0.8125rem;
+  color: var(--ink-soft);
+  text-align: center;
+}
+
+/* ===== Search palette =====
+   People open this constantly, so it never animates. */
+.palette {
+  background: var(--surface-1);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-shell);
+}
+
+kbd {
+  padding: 0.05rem 0.35rem;
+  font: inherit;
+  font-size: 0.75rem;
+  color: var(--ink-soft);
+  border: 1px solid var(--line);
+  border-radius: 5px;
+}
+
+/* ===== Reading ===== */
+.prose {
+  max-width: 38rem;
+  margin-inline: auto;
+  font-size: 1.1875rem;
+  line-height: 1.6;
+}
+
+/* A colour-coded term in body text. Never in headings. */
+.mark {
+  padding: 0 0.3em;
+  color: var(--on-meaning);
+  background: var(--meaning, var(--meaning-a));
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+
+/* Colour for a whole section. Set --meaning and --meaning-soft on it, and the
+   label, marks and cards inside all follow. */
+.tone-a {
+  --meaning: var(--meaning-a);
+  --meaning-soft: var(--meaning-a-soft);
+}
+
+.tone-b {
+  --meaning: var(--meaning-b);
+  --meaning-soft: var(--meaning-b-soft);
+}
+
+.tone-c {
+  --meaning: var(--meaning-c);
+  --meaning-soft: var(--meaning-c-soft);
+}
+
+.tone-band {
+  background: var(--meaning-soft);
+}
+
+/* Stays at the top of the screen until the next section takes over. */
+.section-label {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 3.5rem;
+  font-weight: 600;
+  background: var(--meaning-soft);
+}
+
+.section-label::before {
+  content: '';
+  width: 0.75rem;
+  height: 0.75rem;
+  background: var(--meaning);
+  border-radius: 50%;
+}
+
+/* "Read next" link with a curved edge on its image. */
+.link-card {
+  display: grid;
+  grid-template-columns: 1.6fr 1fr;
+  overflow: hidden;
+  color: inherit;
+  text-decoration: none;
+  background: var(--meaning-soft, var(--surface-1));
+}
+
+.link-card__text {
+  display: grid;
+  align-content: center;
+  gap: 0.25rem;
+  padding: 1rem 1.25rem;
+}
+
+.link-card__hint {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--meaning, var(--ink-soft));
+}
+
+.link-card__title {
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.link-card__media {
+  overflow: hidden;
+  border-radius: 0 0 0 0;
+  clip-path: polygon(14% 0, 100% 0, 100% 100%, 0 100%);
+}
+
+.link-card__art {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 450ms var(--ease-out, ease-out);
+}
+
+/* ===== Choice preview =====
+   Shows what lines up with each option. Use it only where people compare options. */
+.option {
+  display: grid;
+  gap: 0.5rem;
+  justify-items: center;
+}
+
+.option__who {
+  display: grid;
+  gap: 1px;
+}
+
+.option__who > * {
+  padding: 0.1rem 0.5rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  text-align: center;
+  color: var(--tag, var(--ink));
+  border: 1px solid var(--line);
+  transition: background 160ms ease, color 160ms ease;
+}
+
+.option[aria-checked='true'] .option__who > *,
+.option:focus-visible .option__who > * {
+  color: #fff;
+  background: var(--tag, var(--ink));
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .option:hover .option__who > * {
+    color: #fff;
+    background: var(--tag, var(--ink));
+  }
+}
+
+/* ===== Status =====
+   Colour never works alone: every status also carries a word or an icon. */
+.q-btn--danger {
+  color: var(--on-danger);
+  background: var(--danger);
+}
+
+/* Delete in a normal place: grey button, red word. Solid red only in the confirm. */
+.q-btn--quiet-danger {
+  color: var(--danger-text);
+}
+
+.banner {
+  display: flex;
+  gap: var(--space-sm);
+  align-items: flex-start;
+  padding: var(--space-md) var(--space-lg);
+  font-size: var(--text-small);
+  line-height: 1.45;
+  color: var(--ink);
+  background: var(--surface-1);
+  border-radius: var(--radius-control);
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  padding: 0.15rem 0.6rem;
+  font-size: var(--text-caption);
+  font-weight: 500;
+  line-height: 1.4;
+  color: var(--ink-soft);
+  background: var(--surface-2);
+  border-radius: var(--radius-pill);
+}
+
+.banner--danger, .badge--danger { color: var(--danger-text); background: var(--danger-soft); }
+.banner--success, .badge--success { color: var(--success-text); background: var(--success-soft); }
+.banner--warning, .badge--warning { color: var(--warning-text); background: var(--warning-soft); }
+
+/* Data, not buttons: +128 -14 in a diff, a result that passed. */
+.is-added { color: var(--success-text); }
+.is-removed { color: var(--danger-text); }
+
+/* ===== Rows =====
+   Dense lists and settings: rows split by hairlines, never a stack of cards. */
+.rows {
+  display: grid;
+  border-top: 1px solid var(--line);
+}
+
+.row-item {
+  display: flex;
+  gap: var(--space-lg);
+  align-items: center;
+  justify-content: space-between;
+  min-height: 3.25rem;
+  padding-block: var(--space-sm);
+  border-bottom: 1px solid var(--line);
+}
+
+.row-item__text {
+  display: grid;
+  min-width: 0;
+}
+
+.row-item__hint {
+  font-size: var(--text-small);
+  color: var(--ink-soft);
+}
+
+/* ===== Dropdowns =====
+   Native <select class="select"> for plain forms: it gets the phone's own picker.
+   The .drop menu (with assets/menu.js) when options need a second line, an icon,
+   a group or an action. Same selection style as everywhere: fill plus a tick. */
+.select {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  min-height: var(--h-control);
+  padding: 0.5rem 2.25rem 0.5rem 0.75rem;
+  font: inherit;
+  font-size: 0.9375rem;
+  color: var(--ink);
+  background:
+    linear-gradient(45deg, transparent 50%, var(--ink-soft) 50%) right 1.05rem top 50% / 5px 5px no-repeat,
+    linear-gradient(135deg, var(--ink-soft) 50%, transparent 50%) right 0.75rem top 50% / 5px 5px no-repeat,
+    var(--surface-1);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-control);
+  cursor: pointer;
+}
+
+.drop {
+  position: relative;
+  display: inline-block;
+}
+
+.drop--wide {
+  display: block;
+}
+
+.drop__trigger {
+  display: flex;
+  gap: var(--space-sm);
+  align-items: center;
+  width: 100%;
+  min-height: var(--h-control);
+  padding: 0.5rem 0.75rem;
+  font: inherit;
+  font-size: 0.9375rem;
+  color: var(--ink);
+  text-align: left;
+  background: var(--surface-1);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-control);
+  cursor: pointer;
+}
+
+.drop__trigger::after {
+  content: '';
+  flex: none;
+  width: 0.45rem;
+  height: 0.45rem;
+  margin-left: auto;
+  border: solid var(--ink-soft);
+  border-width: 0 1.5px 1.5px 0;
+  transform: translateY(-2px) rotate(45deg);
+}
+
+.drop__trigger[aria-expanded='true'] {
+  background: var(--surface-2);
+}
+
+.drop__value {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.drop__menu {
+  position: absolute;
+  top: calc(100% + 0.35rem);
+  left: 0;
+  z-index: 30;
+  min-width: 100%;
+  max-width: min(22rem, calc(100vw - 2rem));
+  max-height: 18rem;
+  overflow-y: auto;
+  padding: 0.3rem;
+  background: var(--surface-float);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-panel);
+  box-shadow: var(--shadow-float);
+  transform-origin: top left;
+  transition: opacity var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out), visibility 0s var(--dur-fast);
+}
+
+.drop__menu[data-side='top'] {
+  top: auto;
+  bottom: calc(100% + 0.35rem);
+  transform-origin: bottom left;
+}
+
+.drop__menu[data-align='end'] {
+  left: auto;
+  right: 0;
+}
+
+.drop:not([data-open]) .drop__menu {
+  visibility: hidden;
+  opacity: 0;
+  transform: scale(0.97);
+  pointer-events: none;
+}
+
+.drop[data-open] .drop__menu {
+  transition-delay: 0s;
+}
+
+/* Opened from the keyboard: no animation, people do this all day. */
+.drop[data-instant] .drop__menu {
+  transition: none;
+}
+
+.drop__item {
+  display: flex;
+  gap: 0.6rem;
+  align-items: flex-start;
+  width: 100%;
+  padding: 0.45rem 0.6rem;
+  font: inherit;
+  font-size: 0.9375rem;
+  line-height: 1.35;
+  color: var(--ink);
+  text-align: left;
+  background: transparent;
+  border: 0;
+  border-radius: var(--radius-control);
+  cursor: pointer;
+}
+
+.drop__item::before {
+  content: '';
+  flex: none;
+  width: 0.4rem;
+  height: 0.7rem;
+  margin: 0.2rem 0.15rem 0 0.15rem;
+  border: solid transparent;
+  border-width: 0 2px 2px 0;
+  transform: rotate(42deg);
+}
+
+.drop--actions .drop__item::before {
+  display: none;
+}
+
+.drop__item[aria-selected='true'] {
+  background: var(--surface-2);
+}
+
+.drop__item[aria-selected='true']::before {
+  border-color: var(--ink);
+}
+
+.drop__item:focus-visible,
+.drop__item.is-active {
+  outline: none;
+  background: var(--surface-2);
+}
+
+.drop__item--danger {
+  color: var(--danger-text);
+}
+
+.drop__text {
+  display: grid;
+  min-width: 0;
+}
+
+.drop__desc {
+  font-size: var(--text-small);
+  color: var(--ink-soft);
+}
+
+.drop__label {
+  padding: 0.5rem 0.6rem 0.2rem;
+  font-size: var(--text-caption);
+  font-weight: 500;
+  color: var(--ink-soft);
+}
+
+.drop__sep {
+  height: 1px;
+  margin: 0.3rem 0.2rem;
+  background: var(--line);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .drop__item:hover {
+    background: var(--surface-2);
+  }
+
+  .drop__trigger:hover {
+    background: var(--surface-2);
+  }
+}
+
+/* ===== Sliders and readouts =====
+   For sims and calculators. Keep --p on each range input as a percentage, so the
+   filled part follows the value: input.style.setProperty('--p', percent + '%') */
+.ctls {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
+  gap: 0.75rem 1.25rem;
+  align-items: end;
+}
+
+.ctl {
+  display: grid;
+  gap: 0.15rem;
+  min-width: 0;
+}
+
+.ctl__top {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.75rem;
+  align-items: baseline;
+  font-size: 0.9375rem;
+}
+
+.ctl__name {
+  min-width: 0;
+  color: var(--ink-soft);
+}
+
+.ctl__val {
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+input[type='range'] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 1.75rem;
+  margin: 0;
+  background: none;
+  cursor: pointer;
+}
+
+input[type='range']::-webkit-slider-runnable-track {
+  height: 6px;
+  border-radius: 3px;
+  background: linear-gradient(to right, var(--ink) var(--p, 0%), var(--surface-3) var(--p, 0%));
+}
+
+input[type='range']::-moz-range-track {
+  height: 6px;
+  border-radius: 3px;
+  background: var(--surface-3);
+}
+
+input[type='range']::-moz-range-progress {
+  height: 6px;
+  border-radius: 3px;
+  background: var(--ink);
+}
+
+input[type='range']::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 1.25rem;
+  height: 1.25rem;
+  margin-top: calc(3px - 0.625rem);
+  background: var(--ink);
+  border: 3px solid var(--surface-1);
+  border-radius: 50%;
+}
+
+input[type='range']::-moz-range-thumb {
+  width: 0.9rem;
+  height: 0.9rem;
+  background: var(--ink);
+  border: 3px solid var(--surface-1);
+  border-radius: 50%;
+}
+
+input[type='range']:focus-visible {
+  outline: 2px solid var(--meaning-a);
+  outline-offset: 2px;
+}
+
+/* Two to four options side by side. Add to .picks and mark the choice with aria-checked. */
+.picks--seg {
+  flex-wrap: wrap;
+  padding: 0.2rem;
+  background: var(--surface-2);
+  border-radius: var(--radius-control);
+}
+
+.picks--seg .pick {
+  min-height: 2.1rem;
+  padding: 0.25rem 0.7rem;
+}
+
+.picks--seg .pick[aria-checked='true'] {
+  background: var(--surface-0);
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(8rem, 1fr));
+  gap: 0.5rem 1rem;
+}
+
+.stat__l {
+  display: block;
+  font-size: 0.875rem;
+  line-height: 1.3;
+  color: var(--ink-soft);
+}
+
+.stat__v {
+  display: block;
+  font-size: 1.3125rem;
+  font-weight: 600;
+  line-height: 1.25;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ===== Lessons ===== */
+.tick {
+  position: relative;
+  flex: none;
+  width: 1rem;
+  height: 1rem;
+  margin-top: 0.1rem;
+  background: var(--surface-3);
+  border-radius: 50%;
+}
+
+.is-done > .tick {
+  background: var(--meaning, var(--meaning-a));
+}
+
+.is-done > .tick::after {
+  content: '';
+  position: absolute;
+  top: 0.17rem;
+  left: 0.33rem;
+  width: 0.28rem;
+  height: 0.52rem;
+  border: solid var(--on-meaning);
+  border-width: 0 2px 2px 0;
+  transform: rotate(42deg);
+}
+
+/* What to try. Each item ticks itself when the reader has done it. */
+.tasks {
+  display: grid;
+  gap: 0.3rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  line-height: 1.35;
+}
+
+.tasks li {
+  display: flex;
+  gap: 0.55rem;
+  align-items: flex-start;
+}
+
+.tasks li.is-done {
+  color: var(--ink-soft);
+}
+
+/* One question. Keep .why hidden until an option is chosen. */
+.opts {
+  display: grid;
+  gap: 0.4rem;
+}
+
+.opt {
+  display: block;
+  width: 100%;
+  padding: 0.65rem 0.85rem;
+  font: inherit;
+  line-height: 1.4;
+  color: var(--ink);
+  text-align: left;
+  background: var(--surface-1);
+  border: 0;
+  border-radius: var(--radius-control);
+  cursor: pointer;
+  transition: background 120ms ease, transform 120ms ease-out;
+}
+
+.opt:active {
+  transform: scale(0.985);
+}
+
+.opt:focus-visible,
+.seg:focus-visible {
+  outline: 2px solid var(--meaning, var(--meaning-a));
+  outline-offset: 2px;
+}
+
+.opt.is-wrong {
+  color: var(--ink-soft);
+  text-decoration: line-through;
+}
+
+.opt.is-right {
+  font-weight: 600;
+  background: var(--meaning-soft, var(--surface-2));
+}
+
+.why {
+  margin-top: 0.65rem;
+  padding: 0.75rem 0.9rem;
+  line-height: 1.5;
+  background: var(--surface-1);
+  border-radius: var(--radius-control);
+}
+
+.why.is-right {
+  background: var(--meaning-soft, var(--surface-2));
+}
+
+/* Steps: .rail is a .picks--stack of links on wide screens, .track replaces it on phones. */
+.rail {
+  position: sticky;
+  top: 5rem;
+  align-self: start;
+}
+
+.track {
+  display: none;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.track__segs {
+  flex: 1;
+  display: flex;
+  gap: 3px;
+  min-width: 0;
+}
+
+.seg {
+  flex: 1;
+  display: grid;
+  align-items: center;
+  height: 1.5rem;
+  padding: 0;
+  background: none;
+  border: 0;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.seg::before {
+  content: '';
+  height: 6px;
+  background: var(--surface-3);
+  border-radius: 3px;
+}
+
+.seg.is-done::before {
+  background: var(--meaning, var(--meaning-a));
+}
+
+.seg[aria-current='true']::before {
+  height: 10px;
+  background: var(--ink);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .opt:not(:disabled):hover {
+    background: var(--surface-2);
+  }
+}
+
+@media (max-width: 1079px) {
+  .rail {
+    display: none;
+  }
+
+  .track {
+    display: flex;
+  }
+}
+
+@media (max-width: 767px) {
+  .link-card {
+    grid-template-columns: 1fr;
+  }
+
+  .link-card__media {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .q-btn,
+  .opt,
+  .drop__menu,
+  .link-card__art {
+    transition: none;
+  }
+
+  .q-btn:active,
+  .opt:active {
+    transform: none;
+  }
+}

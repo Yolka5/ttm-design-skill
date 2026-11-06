@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en" data-kind="use">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How a swerve module turns</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400..700&family=Newsreader:opsz,wght@6..72,400..600&display=swap">
+<!-- Read mode starter. One meaning colour per section, set with .tone-a/b/c.
+     For a single-file artifact, paste the CSS inline instead of linking it. -->
+<link rel="stylesheet" href="../tokens.css">
+<link rel="stylesheet" href="../controls.css">
+<style>
+  .head { max-width: 40rem; margin-inline: auto; padding: var(--space-3xl) max(16px, env(safe-area-inset-right, 0px)) var(--space-xl) max(16px, env(safe-area-inset-left, 0px)); }
+  .head h1 { font-size: var(--text-h1); margin: 0 0 var(--space-md); }
+  .head p { margin: 0; font-size: var(--text-prose); color: var(--ink-soft); }
+  .section { padding-bottom: var(--space-2xl); }
+  .prose { padding-inline: max(16px, env(safe-area-inset-left, 0px)); padding-block: var(--space-xl) 0; }
+  .prose h2 { font-size: var(--text-h2); margin: 0 0 var(--space-md); }
+  .figure { max-width: 52rem; margin: var(--space-xl) auto; padding-inline: 16px; }
+  .figure > div { aspect-ratio: 16 / 7; max-width: 100%; border-radius: var(--radius-panel); background: var(--meaning-soft); display: grid; place-items: center; color: var(--meaning); font-weight: 600; }
+  .next { max-width: 40rem; margin: var(--space-2xl) auto; padding-inline: 16px; display: grid; gap: var(--space-md); }
+  .link-card { border-radius: var(--radius-panel); }
+</style>
+</head>
+<body>
+<header class="head">
+  <h1>How a swerve module turns</h1>
+  <p>Two motors, one wheel, and the reason the robot can drive sideways while it spins.</p>
+</header>
+
+<section class="section tone-a">
+  <div class="section-label">Driving</div>
+  <div class="prose">
+    <h2>One motor drives</h2>
+    <p>The drive motor spins the wheel like any other robot. <strong>Its speed sets how fast that corner moves.</strong></p>
+    <p>A <span class="mark">drive</span> command is just a speed, the same as on a tank drive.</p>
+  </div>
+  <div class="figure"><div>Diagram goes here</div></div>
+</section>
+
+<section class="section tone-b">
+  <div class="section-label">Steering</div>
+  <div class="prose">
+    <h2>The other motor points it</h2>
+    <p>The steering motor rotates the whole wheel. <strong>Its angle sets which way that corner moves.</strong></p>
+  </div>
+</section>
+
+<nav class="next tone-b" aria-label="Read next">
+  <a class="link-card" href="#"><span class="link-card__text"><span class="link-card__hint">Read next</span><span class="link-card__title">Field-oriented driving</span></span><span class="link-card__media"><span class="link-card__art" style="display:block;background:var(--meaning)"></span></span></a>
+</nav>
+</body>
+</html>
