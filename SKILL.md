@@ -124,10 +124,12 @@ These read as AI-generated, because they are decoration pretending to be informa
 | `assets/tokens.css` | Shared fonts, colours and radii. Always start here. |
 | `assets/controls.css` | Use parts: quiet buttons, selection, dropdowns, inputs, status, rows, sliders, readouts, lesson parts, sign-in shell, reading parts. |
 | `assets/menu.js` | Keyboard, focus and placement for `.drop` menus. Use pages. |
+| `assets/editor.css`, `editor.js` | Editor parts, modelled on Claude's own tools: outline rail, floating dock with popovers and prompt bar, tooltips with shortcut keys, hover handles on tables, the bar over selected text, small menus. Use pages. |
+| `assets/sketch.js` | Redraws any SVG as a hand-drawn sketch. |
 | `assets/motion/motion.css`, `motion.js` | Show parts: sheets, reveals, parallax, beats, letters, glass pills, glass panels, cards. |
 | `assets/show.css`, `show.js` | Show parts: brand layer, nav, openings, statement, product sequence, atmosphere band, mosaic, rows, chapters, closing, footer. |
 | `assets/motion/demo.html` | Working example of every motion pattern. Read it to see the markup. |
-| `assets/templates/` | Starting files for a tool, an article, a lesson and a Show page. Copy one instead of starting from nothing. |
+| `assets/templates/` | Starting files for a tool, an editor, an article, a lesson and a Show page. Copy one instead of starting from nothing. |
 | `assets/originals/` | Exact code from the TTM site the Show patterns came from. Check it when a pattern needs to match precisely. Its colours and fonts stay out. |
 | `assets/image-examples/overview.png` | What the image tool can produce. |
 | `scripts/collage.py` | Cut-outs, tints and backing shapes for images. |

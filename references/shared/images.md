@@ -36,6 +36,15 @@ A cut-out from a black background keeps a faint dark edge, so place it on a dark
 
 Always look at the output before using it. Check for leftover background, holes in dark objects and missing thin parts.
 
+## Sketches
+
+A hand-drawn look for diagrams, like a quick whiteboard drawing: wobbly double lines, and a fill laid down slightly off the line, as if coloured in with a marker. Use `assets/sketch.js`: draw a normal SVG and add `data-sketch` to it.
+
+- Good for lessons, explainers and informal brands, where a sketch says "this is the idea" better than a precise drawing.
+- Not for anything someone will measure from, like a part drawing or a chart with values. Precise things should look precise.
+- Use `stroke="currentColor"` so lines follow the text colour in light and dark, and one warm fill per drawing.
+- `data-rough`, `data-spill` and `data-seed` change how loose the hand is. The same drawing always comes out the same.
+
 ## Art direction
 
 The tool handles the treatment. The idea is the hard part.

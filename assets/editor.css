@@ -1,0 +1,454 @@
+/* Editor parts for Use pages: outline rail, floating toolbar (dock), tool
+   popovers, prompt bar, tooltips, hover handles on tables, the selected-text
+   bar and small pop menus. Modelled on how Claude's own Docs and Design tools
+   look and behave. Pair with tokens.css, controls.css and editor.js. */
+
+/* ===== Shared: icons, tooltips, pop menus ===== */
+.ico {
+  display: block;
+  width: 18px;
+  height: 18px;
+  flex: none;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* One tooltip, moved by editor.js. Dark on light pages and light-on-dark the
+   other way, so it always reads as a label floating over the work. */
+.tip {
+  position: fixed;
+  z-index: 90;
+  display: flex;
+  gap: 0.45rem;
+  align-items: baseline;
+  max-width: 18rem;
+  padding: 0.3rem 0.55rem;
+  font-size: var(--text-caption);
+  line-height: 1.3;
+  color: var(--surface-0);
+  background: var(--ink);
+  border-radius: 7px;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(2px);
+  transition: opacity 120ms var(--ease-out), transform 120ms var(--ease-out);
+}
+
+.tip[data-on='1'] { opacity: 1; transform: none; }
+.tip[data-instant] { transition: none; }
+.tip kbd { font: inherit; font-weight: 600; color: var(--surface-3); }
+
+.pop-menu {
+  position: fixed;
+  z-index: 80;
+  min-width: 11rem;
+  max-width: min(18rem, calc(100vw - 2rem));
+  padding: 0.3rem;
+  background: var(--surface-float);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  box-shadow: var(--shadow-float);
+  transform-origin: var(--from, top right);
+  transition: opacity var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out);
+}
+
+.pop-menu[hidden] { display: block; visibility: hidden; opacity: 0; transform: scale(0.97); pointer-events: none; }
+.pop-menu[data-instant] { transition: none; }
+
+.pop-menu__item {
+  display: flex;
+  gap: 0.6rem;
+  align-items: center;
+  width: 100%;
+  padding: 0.42rem 0.6rem;
+  font: inherit;
+  font-size: 0.9rem;
+  color: var(--ink);
+  text-align: left;
+  background: transparent;
+  border: 0;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.pop-menu__item:focus-visible { outline: none; background: var(--surface-2); }
+.pop-menu__item--danger { color: var(--danger-text); }
+.pop-menu__sep { height: 1px; margin: 0.3rem 0.25rem; background: var(--line); }
+
+@media (hover: hover) and (pointer: fine) {
+  .pop-menu__item:hover { background: var(--surface-2); }
+}
+
+/* ===== Outline rail =====
+   A dash per heading down the page edge. Hover or focus opens the real list.
+   Markup: <nav class="outline" data-outline="#doc"></nav>; editor.js fills it. */
+.outline {
+  position: sticky;
+  top: 6rem;
+  z-index: 20;
+  width: 2rem;
+  align-self: start;
+}
+
+.outline__rail {
+  display: grid;
+  gap: 7px;
+  padding: 0.4rem 0.3rem;
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+
+.outline__tick {
+  display: block;
+  width: 14px;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--surface-3);
+  transition: width var(--dur-fast) var(--ease-out), background-color var(--dur-fast) var(--ease-out);
+}
+
+.outline__tick[data-level='3'] { width: 9px; margin-left: 5px; }
+.outline__tick[aria-current='true'] { width: 20px; margin-left: 0; background: var(--meaning-a); }
+
+.outline__panel {
+  position: absolute;
+  top: -0.35rem;
+  left: 0;
+  width: max-content;
+  min-width: 13rem;
+  max-width: min(17rem, calc(100vw - 2rem));
+  max-height: min(70vh, 34rem);
+  overflow-y: auto;
+  padding: 0.3rem;
+  background: var(--surface-float);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  box-shadow: var(--shadow-float);
+  transform-origin: top left;
+  transition: opacity var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out), visibility 0s linear var(--dur-fast);
+}
+
+.outline:not([data-open]) .outline__panel { visibility: hidden; opacity: 0; transform: scale(0.97); pointer-events: none; }
+.outline[data-open] .outline__panel { transition-delay: 0s; }
+.outline[data-instant] .outline__panel { transition: none; }
+
+.outline__link {
+  display: flex;
+  gap: 0.6rem;
+  align-items: center;
+  padding: 0.28rem 0.55rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--ink);
+  text-decoration: none;
+  border-radius: 7px;
+}
+
+.outline__link::before {
+  content: '';
+  flex: none;
+  width: 12px;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--surface-3);
+}
+
+.outline__link[data-level='3'] { padding-left: 1.4rem; font-weight: 400; color: var(--ink-soft); }
+.outline__link[data-level='3']::before { width: 8px; }
+.outline__link[aria-current='true'] { background: var(--surface-2); color: var(--ink); }
+.outline__link[aria-current='true']::before { background: var(--meaning-a); }
+.outline__link span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.outline__link:focus-visible { outline: 2px solid var(--meaning-a); outline-offset: -2px; }
+
+@media (hover: hover) and (pointer: fine) {
+  .outline__link:hover { background: var(--surface-2); }
+}
+
+@media (max-width: 1079px) {
+  .outline { display: none; }
+}
+
+/* ===== Dock: the floating toolbar =====
+   Icon tools in groups, one labelled action at the end. Options open above it. */
+.dock {
+  position: fixed;
+  left: 50%;
+  bottom: max(1rem, env(safe-area-inset-bottom, 0px));
+  z-index: 60;
+  display: grid;
+  justify-items: center;
+  gap: 0.5rem;
+  transform: translateX(-50%);
+  max-width: calc(100vw - 1rem);
+}
+
+.dock__bar {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  padding: 5px;
+  background: var(--surface-float);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  box-shadow: var(--shadow-float);
+}
+
+.dock__tool {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  color: var(--ink-soft);
+  background: transparent;
+  border: 0;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out);
+}
+
+.dock__tool[aria-pressed='true'],
+.dock__tool[aria-expanded='true'] {
+  color: var(--meaning-a);
+  background: color-mix(in srgb, var(--meaning-a) 18%, transparent);
+}
+
+.dock__tool:focus-visible,
+.dock__ask:focus-visible { outline: 2px solid var(--meaning-a); outline-offset: 1px; }
+
+.dock__sep { flex: none; width: 1px; height: 20px; margin-inline: 5px; background: var(--line); }
+
+.dock__ask {
+  height: 36px;
+  margin-left: 4px;
+  padding: 0 0.85rem;
+  font: inherit;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--ink);
+  white-space: nowrap;
+  background: var(--surface-2);
+  border: 0;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out);
+}
+
+.dock__ask[aria-pressed='true'] { color: var(--meaning-a); background: color-mix(in srgb, var(--meaning-a) 16%, var(--surface-2)); }
+
+@media (hover: hover) and (pointer: fine) {
+  .dock__tool:not([aria-pressed='true']):not([aria-expanded='true']):hover { color: var(--ink); background: var(--surface-2); }
+  .dock__ask:hover { background: var(--surface-3); }
+}
+
+.dock__tool:active, .dock__ask:active { transform: scale(0.96); }
+
+/* Options for the chosen tool, stacked above the bar. */
+.dock__pop {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  padding: 5px;
+  background: var(--surface-float);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  box-shadow: var(--shadow-float);
+  transform-origin: bottom center;
+  transition: opacity var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out);
+}
+
+.dock__pop[hidden] { display: none; }
+.dock__pop--grid { display: grid; grid-template-columns: repeat(5, 36px); }
+.dock__pop--grid[hidden] { display: none; }
+
+.dock__swatch {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  background: transparent;
+  border: 0;
+  border-radius: 9px;
+  cursor: pointer;
+}
+
+.dock__swatch::before {
+  content: '';
+  width: 18px;
+  height: 18px;
+  border-radius: 6px;
+  background: var(--c);
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.12);
+}
+
+.dock__swatch[aria-checked='true'] { background: color-mix(in srgb, var(--meaning-a) 22%, transparent); box-shadow: inset 0 0 0 1.5px var(--meaning-a); }
+.dock__swatch:focus-visible { outline: 2px solid var(--meaning-a); outline-offset: 1px; }
+
+/* The prompt bar: one line to describe a change. */
+.dock__prompt {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  width: min(34rem, calc(100vw - 1rem));
+  padding: 0.4rem 0.4rem 0.4rem 1rem;
+  background: var(--surface-float);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  box-shadow: var(--shadow-float);
+}
+
+.dock__prompt[hidden] { display: none; }
+
+.dock__prompt input {
+  flex: 1;
+  min-width: 0;
+  height: 2.25rem;
+  font: inherit;
+  font-size: 0.95rem;
+  color: var(--ink);
+  background: transparent;
+  border: 0;
+  outline: none;
+}
+
+.dock__prompt input::placeholder { color: var(--ink-soft); }
+
+.dock__send {
+  display: grid;
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+  padding: 0;
+  color: var(--ink-soft);
+  background: var(--surface-2);
+  border: 0;
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+.dock__prompt[data-ready] .dock__send { color: var(--on-main); background: var(--main); }
+
+/* Narrow screens: the bar scrolls sideways inside itself rather than run off the page. */
+.dock__bar { max-width: calc(100vw - 1rem); overflow-x: auto; scrollbar-width: none; }
+.dock__bar::-webkit-scrollbar { display: none; }
+.dock__pop { max-width: calc(100vw - 1rem); }
+
+@media (max-width: 560px) {
+  .dock__tool { flex: none; width: 32px; height: 32px; }
+  .dock__ask { flex: none; }
+  .dock__sep { margin-inline: 2px; }
+  .dock__ask { padding: 0 0.6rem; }
+}
+
+/* ===== Editable table =====
+   Quiet until hovered: a grip by the row, a pill over the column, a "…" by the
+   table. Markup: <div class="etable" data-etable><table>…</table></div> */
+.etable {
+  position: relative;
+  margin-block: var(--space-xl);
+  padding-left: 1.75rem;
+  margin-left: -1.75rem;
+}
+
+.etable table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: 0.9375rem;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+}
+
+.etable th,
+.etable td {
+  padding: 0.6rem 0.75rem;
+  text-align: left;
+  vertical-align: top;
+  border-bottom: 1px solid var(--line);
+  border-right: 1px solid var(--line);
+}
+
+.etable th { font-weight: 500; color: var(--ink-soft); background: var(--surface-1); }
+.etable tr > :last-child { border-right: 0; }
+.etable tbody tr:last-child > * { border-bottom: 0; }
+.etable thead th:first-child { border-top-left-radius: 9px; }
+.etable thead th:last-child { border-top-right-radius: 9px; }
+.etable tr.is-dragging > * { background: color-mix(in srgb, var(--meaning-a) 10%, transparent); }
+.etable .is-col-dragging { background: color-mix(in srgb, var(--meaning-a) 10%, transparent); }
+
+.etable__grip,
+.etable__colgrip,
+.etable__more {
+  position: absolute;
+  z-index: 3;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  color: var(--ink-soft);
+  background: var(--surface-float);
+  border: 1px solid var(--line);
+  cursor: grab;
+  opacity: 0;
+  transition: opacity 120ms var(--ease-out), background-color 120ms var(--ease-out);
+  touch-action: none;
+}
+
+.etable__grip { width: 16px; height: 22px; border-radius: 6px; }
+.etable__colgrip { width: 22px; height: 10px; border-radius: 999px; }
+.etable__more { width: 28px; height: 28px; border-radius: 8px; cursor: pointer; }
+.etable__grip .ico { width: 12px; height: 12px; }
+.etable__colgrip .ico { width: 14px; height: 6px; }
+.etable__more .ico { width: 16px; height: 16px; }
+
+.etable__grip[data-on],
+.etable__colgrip[data-on],
+.etable:hover .etable__more,
+.etable:focus-within .etable__more,
+.etable__grip:focus-visible,
+.etable__colgrip:focus-visible { opacity: 1; }
+
+.etable__grip:focus-visible,
+.etable__colgrip:focus-visible,
+.etable__more:focus-visible { outline: 2px solid var(--meaning-a); outline-offset: 1px; }
+
+@media (hover: hover) and (pointer: fine) {
+  .etable__grip:hover, .etable__colgrip:hover, .etable__more:hover { color: var(--ink); background: var(--surface-2); }
+}
+
+/* Touch: no hover, so the controls stay visible. */
+@media (hover: none) {
+  .etable__grip[data-on], .etable__more { opacity: 1; }
+}
+
+/* ===== Selected-text bar ===== */
+.selbar {
+  position: fixed;
+  z-index: 70;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  padding: 4px;
+  background: var(--surface-float);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  box-shadow: var(--shadow-float);
+  transform-origin: bottom center;
+  transition: opacity 120ms var(--ease-out), transform 120ms var(--ease-out);
+}
+
+.selbar[hidden] { display: flex; visibility: hidden; opacity: 0; transform: translateY(4px) scale(0.98); pointer-events: none; }
+.selbar .dock__tool { width: 32px; height: 32px; border-radius: 8px; }
+.selbar .dock__ask { height: 32px; border-radius: 8px; font-size: 0.875rem; }
+.selbar .dock__sep { height: 18px; margin-inline: 3px; }
+
+/* ===== Reduced motion ===== */
+@media (prefers-reduced-motion: reduce) {
+  .tip, .pop-menu, .outline__panel, .outline__tick, .dock__pop, .selbar, .etable__grip, .etable__colgrip, .etable__more { transition: none; }
+}

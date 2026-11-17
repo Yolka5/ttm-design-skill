@@ -47,6 +47,35 @@ These are the most common Tool job, and the ones most often over-built.
 - **Dense lists and settings** use `.rows`, hairline-split rows. A stack of cards for every item reads as clutter.
 - **Floating layers:** at most two at once, for example a panel and a menu inside it. A third means it should be a dialog. Only floating things get `--shadow-float`.
 
+## Editors and canvases
+
+For tools people write or draw in: documents, boards, diagrams, editable tables. The parts are in `assets/editor.css` and `assets/editor.js`, modelled closely on Claude's own Docs and Design tools. `assets/templates/editor.html` shows all of them working.
+
+**The dock.** One floating toolbar, centred at the bottom of the screen.
+
+- Icon buttons only, in groups split by a thin line: moving around (select, pan), then making things (text, frame, sticky, draw, shape), then talking (reaction, comment). One labelled button at the end for the main action, such as "Ask AI".
+- The chosen tool gets the selection fill, tinted with `--meaning-a`.
+- Every tool has a one-letter key, shown in its tooltip: "Draw P". The key works whenever the cursor is not in a text field.
+- A tool's options open *above* the bar, never over it: a five-wide grid of shapes, or pen and arrow plus five colour dots with a tinted square around the chosen one.
+- The prompt bar ("Describe a change") stacks above everything, with a microphone and a round send button. The send button stays live and only darkens once there is text.
+- Escape closes options, then the prompt. Clicking outside closes them too.
+
+**Tooltips.** Short labels in the ink colour, flipped against the page. The first waits about half a second, and the next ones along the same bar show instantly. A tooltip never covers an open menu. Use `data-tip` and `data-key`.
+
+**Hover handles on tables.** `[data-etable]`. Nothing shows until the pointer is over the table.
+
+- A six-dot grip appears left of the row under the pointer, and a small pill appears over the column's header. One handle does two things: a click opens its menu, and a drag moves the row or column. The tooltip says both: "Click for row options · drag to move".
+- A "…" button waits just outside the table's top-right corner for actions on the whole table.
+- Menus list the safe actions first, then a divider, then the destructive one in red at the bottom: "Delete row", "Delete table".
+- Keyboard: the grips take focus, Enter opens the menu, and Alt with the arrow keys moves the row or column. On touch screens the handles stay visible.
+- The table is quiet: hairline lines, a slightly tinted header, 10px corners, generous padding.
+
+**The bar over selected text.** `[data-selbar]`. Selecting text in an editable area raises a small bar just above it, with the same buttons and look as the dock in a smaller size: text size, table, image, checklist, toggle, a divider, comment, and one labelled action. It never takes focus away from the text.
+
+**Menus anywhere.** `ttmEditor.menu(button, items)` opens the same small menu from any button: items, `'sep'` for a divider, and `danger: true` for the red last item.
+
+Hide these parts on a page people only read. They belong to editing.
+
 ## Sign-in
 
 Use `.shell`. Stack provider buttons, then an "or" divider, an input and one main button. Keep the provider buttons grey.

@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en" data-kind="use">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Onshape helper notes</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400..700&family=Newsreader:opsz,wght@6..72,400..600&display=swap">
+<!-- Editor starter (Use, Tool mode): outline rail, editable table with hover
+     handles, a bar over selected text, a hand-drawn figure and the floating
+     dock with its popovers and prompt bar. Keep the parts the job needs. -->
+<link rel="stylesheet" href="../tokens.css">
+<link rel="stylesheet" href="../controls.css">
+<link rel="stylesheet" href="../editor.css">
+<style>
+  body { margin: 0; background: var(--surface-0); color: var(--ink); font-family: var(--font-work); }
+  .layout { display: grid; grid-template-columns: 2.5rem minmax(0, 46rem); gap: var(--space-2xl); justify-content: center; padding: var(--space-3xl) max(16px, env(safe-area-inset-right, 0px)) 9rem max(16px, env(safe-area-inset-left, 0px)); }
+  .doc h1 { font-family: var(--font-voice); font-weight: 500; font-size: var(--text-h1); line-height: 1.1; margin: 0 0 var(--space-md); }
+  .doc h2 { font-size: var(--text-h2); margin: var(--space-3xl) 0 var(--space-md); scroll-margin-top: 2rem; }
+  .doc h3 { font-size: var(--text-h3); margin: var(--space-2xl) 0 var(--space-sm); scroll-margin-top: 2rem; }
+  .doc p, .doc li { font-size: 1.0625rem; line-height: 1.6; }
+  .doc p { margin: 0 0 var(--space-md); }
+  .doc [contenteditable] { outline: none; }
+  .doc mark { background: color-mix(in srgb, var(--warning) 35%, transparent); color: inherit; border-radius: 3px; }
+  .figure { display: grid; justify-items: center; gap: var(--space-sm); margin: var(--space-xl) 0; padding: var(--space-xl); background: var(--surface-1); border-radius: var(--radius-panel); }
+  .figure svg { width: min(15rem, 70%); height: auto; color: var(--ink); }
+  .figure figcaption { font-size: var(--text-small); color: var(--ink-soft); }
+  .note { font-size: var(--text-small); color: var(--ink-soft); }
+  @media (max-width: 1079px) { .layout { grid-template-columns: minmax(0, 1fr); } }
+</style>
+</head>
+<body>
+<div class="layout">
+  <nav class="outline" data-outline="#doc"></nav>
+  <main class="doc" id="doc">
+    <h1>Onshape helper notes</h1>
+    <p class="note">Select any sentence to see the text bar. Hover the table for its handles. The toolbar sits at the bottom.</p>
+
+    <h2>What it does</h2>
+    <div data-selbar>
+      <p contenteditable="true">The helper reads master sketches and plate geometry, then plans a whole gearbox for you to confirm. It only places library parts, so every bolt and bearing is one you can buy.</p>
+      <div class="selbar">
+        <button class="dock__tool" type="button" data-icon="textsize" data-tip="Text size" data-action="size" aria-label="Text size"></button>
+        <button class="dock__tool" type="button" data-icon="table" data-tip="Table" data-action="table" aria-label="Table"></button>
+        <button class="dock__tool" type="button" data-icon="image" data-tip="Image" data-action="image" aria-label="Image"></button>
+        <button class="dock__tool" type="button" data-icon="checklist" data-tip="Checklist" data-action="checklist" aria-label="Checklist"></button>
+        <button class="dock__tool" type="button" data-icon="toggle" data-tip="Toggle" data-action="toggle" aria-label="Toggle"></button>
+        <span class="dock__sep"></span>
+        <button class="dock__tool" type="button" data-icon="comment" data-tip="Comment" data-action="comment" aria-label="Comment"></button>
+        <button class="dock__ask" type="button" data-action="ask">Ask AI</button>
+      </div>
+    </div>
+
+    <h2>Features</h2>
+    <h3>Assembly tools</h3>
+    <div class="etable" data-etable>
+      <table>
+        <thead><tr><th>Feature</th><th>What it does</th><th>Where</th></tr></thead>
+        <tbody>
+          <tr><td contenteditable="true">Auto-assembler (Shift+A)</td><td contenteditable="true">Plans a gearbox from master sketches, you confirm</td><td contenteditable="true">Assembly</td></tr>
+          <tr><td contenteditable="true">Part search (A)</td><td contenteditable="true">Type any library part name, insert it</td><td contenteditable="true">Assembly</td></tr>
+          <tr><td contenteditable="true">Bolts, nuts, spacers</td><td contenteditable="true">Pick two holes, get a bolt of the right length</td><td contenteditable="true">Assembly</td></tr>
+          <tr><td contenteditable="true">Motors</td><td contenteditable="true">Click a motor mount, get a Kraken, Falcon or NEO aligned to it</td><td contenteditable="true">Assembly</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Gears</h3>
+    <p>Gears, pulleys and sprockets come from a layout sketch or a size you pick.</p>
+    <figure class="figure">
+      <svg data-sketch viewBox="0 0 200 200" role="img" aria-label="A sketch of a ten-tooth gear">
+        <path d="M160.9,88.4 L177.6,92.2 L177.6,107.8 L160.9,111.6 L156.1,126.4 L167.4,139.3 L158.2,151.9 L142.4,145.2 L129.9,154.3 L131.4,171.4 L116.5,176.2 L107.8,161.5 L92.2,161.5 L83.5,176.2 L68.6,171.4 L70.1,154.3 L57.6,145.2 L41.8,151.9 L32.6,139.3 L43.9,126.4 L39.1,111.6 L22.4,107.8 L22.4,92.2 L39.1,88.4 L43.9,73.6 L32.6,60.7 L41.8,48.1 L57.6,54.8 L70.1,45.7 L68.6,28.6 L83.5,23.8 L92.2,38.5 L107.8,38.5 L116.5,23.8 L131.4,28.6 L129.9,45.7 L142.4,54.8 L158.2,48.1 L167.4,60.7 L156.1,73.6 Z" fill="#f5b971" stroke="currentColor" stroke-width="2.6"/>
+        <circle cx="100" cy="100" r="30" fill="none" stroke="currentColor" stroke-width="2.4"/>
+        <circle cx="100" cy="100" r="15" fill="#ffffff" stroke="currentColor" stroke-width="2.4"/>
+        <rect x="95" y="80" width="10" height="7" fill="currentColor" stroke="currentColor" stroke-width="1"/>
+      </svg>
+      <figcaption>A 10-tooth gear on a keyed shaft.</figcaption>
+    </figure>
+
+    <h2>Shortcuts</h2>
+    <p>Every tool in the bar has a key. Press V to select, H to pan, P to draw and R for shapes.</p>
+    <h3>In the assembly</h3>
+    <p>Shift+A opens the auto-assembler, and A opens part search.</p>
+    <h3>Anywhere</h3>
+    <p>Shift+B opens the ReCalc window over whatever you are doing.</p>
+
+    <h2>Not in this version</h2>
+    <p>Anything beyond one click is left out, and the helper never edits your own parts.</p>
+  </main>
+</div>
+
+<div class="dock" data-dock>
+  <div class="dock__prompt" hidden>
+    <input type="text" placeholder="Describe a change" aria-label="Describe a change">
+    <button class="dock__tool" type="button" data-icon="mic" data-tip="Dictate" aria-label="Dictate"></button>
+    <button class="dock__send" type="button" data-icon="send" aria-label="Send"></button>
+  </div>
+  <div class="dock__pop dock__pop--grid" id="pop-shapes" hidden>
+    <button class="dock__tool" type="button" data-option="square" data-icon="square" aria-pressed="true" aria-label="Square"></button>
+    <button class="dock__tool" type="button" data-option="circle" data-icon="circle" aria-pressed="false" aria-label="Circle"></button>
+    <button class="dock__tool" type="button" data-option="pill" data-icon="pill" aria-pressed="false" aria-label="Pill"></button>
+    <button class="dock__tool" type="button" data-option="diamond" data-icon="diamond" aria-pressed="false" aria-label="Diamond"></button>
+    <button class="dock__tool" type="button" data-option="roundrect" data-icon="roundrect" aria-pressed="false" aria-label="Rounded rectangle"></button>
+    <button class="dock__tool" type="button" data-option="hexagon" data-icon="hexagon" aria-pressed="false" aria-label="Hexagon"></button>
+    <button class="dock__tool" type="button" data-option="parallelogram" data-icon="parallelogram" aria-pressed="false" aria-label="Parallelogram"></button>
+    <button class="dock__tool" type="button" data-option="cylinder" data-icon="cylinder" aria-pressed="false" aria-label="Cylinder"></button>
+    <button class="dock__tool" type="button" data-option="drum" data-icon="drum" aria-pressed="false" aria-label="Drum"></button>
+    <button class="dock__tool" type="button" data-option="note" data-icon="note" aria-pressed="false" aria-label="Note"></button>
+    <button class="dock__tool" type="button" data-option="cloud" data-icon="cloud" aria-pressed="false" aria-label="Cloud"></button>
+    <button class="dock__tool" type="button" data-option="person" data-icon="person" aria-pressed="false" aria-label="Person"></button>
+    <button class="dock__tool" type="button" data-option="table" data-icon="table" aria-pressed="false" aria-label="Table"></button>
+  </div>
+  <div class="dock__pop" id="pop-draw" hidden>
+    <button class="dock__tool" type="button" data-option="pen" data-icon="pencil" aria-pressed="true" aria-label="Pen"></button>
+    <button class="dock__tool" type="button" data-option="arrow" data-icon="arrow" aria-pressed="false" aria-label="Arrow"></button>
+    <span class="dock__sep"></span>
+    <button class="dock__swatch" type="button" role="radio" data-option="white" style="--c:#f4f4f2" aria-checked="false" aria-label="White"></button>
+    <button class="dock__swatch" type="button" role="radio" data-option="peach" style="--c:#f5a97f" aria-checked="true" aria-label="Peach"></button>
+    <button class="dock__swatch" type="button" role="radio" data-option="sky" style="--c:#9ccbe8" aria-checked="false" aria-label="Sky"></button>
+    <button class="dock__swatch" type="button" role="radio" data-option="mint" style="--c:#b5e3a1" aria-checked="false" aria-label="Mint"></button>
+    <button class="dock__swatch" type="button" role="radio" data-option="lilac" style="--c:#cbb7f2" aria-checked="false" aria-label="Lilac"></button>
+  </div>
+  <div class="dock__bar" role="toolbar" aria-label="Tools">
+    <button class="dock__tool" type="button" data-tool="select" data-key="V" data-tip="Select" data-icon="pointer" aria-pressed="true" aria-label="Select"></button>
+    <button class="dock__tool" type="button" data-tool="pan" data-key="H" data-tip="Pan" data-icon="hand" aria-pressed="false" aria-label="Pan"></button>
+    <span class="dock__sep"></span>
+    <button class="dock__tool" type="button" data-tool="text" data-key="T" data-tip="Text" data-icon="text" aria-pressed="false" aria-label="Text"></button>
+    <button class="dock__tool" type="button" data-tool="frame" data-key="F" data-tip="Frame" data-icon="frame" aria-pressed="false" aria-label="Frame"></button>
+    <button class="dock__tool" type="button" data-tool="sticky" data-key="S" data-tip="Sticky note" data-icon="sticky" aria-pressed="false" aria-label="Sticky note"></button>
+    <button class="dock__tool" type="button" data-tool="draw" data-key="P" data-tip="Draw" data-icon="pencil" data-pop="pop-draw" aria-pressed="false" aria-expanded="false" aria-label="Draw"></button>
+    <button class="dock__tool" type="button" data-tool="shape" data-key="R" data-tip="Shapes" data-icon="square" data-pop="pop-shapes" aria-pressed="false" aria-expanded="false" aria-label="Shapes"></button>
+    <button class="dock__tool" type="button" data-tool="react" data-key="E" data-tip="Reaction" data-icon="smile" aria-pressed="false" aria-label="Reaction"></button>
+    <button class="dock__tool" type="button" data-tool="comment" data-key="C" data-tip="Comment" data-icon="comment" aria-pressed="false" aria-label="Comment"></button>
+    <button class="dock__ask" type="button" aria-pressed="false">Ask AI</button>
+  </div>
+</div>
+
+<script src="../editor.js"></script>
+<script src="../sketch.js"></script>
+<script>
+  /* Example wiring: what the page does with each choice. */
+  document.addEventListener('selbar', (e) => {
+    const { action, range } = e.detail;
+    if (action === 'comment' && range) { const m = document.createElement('mark'); try { range.surroundContents(m); } catch {} getSelection().removeAllRanges(); }
+  });
+</script>
+</body>
+</html>

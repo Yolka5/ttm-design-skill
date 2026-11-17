@@ -18,6 +18,15 @@ This is what lifts an explainer above a blog post. Give each concept a colour an
 - Use `.mark` for a colour-coded term in body text, sparingly. Never in a heading.
 - For a concept that combines two others, a gradient between their colours says so.
 
+## Outline rail
+
+For long documents with many headings: notes, specs, plans, handbooks. `<nav class="outline" data-outline="#doc">` with `assets/editor.css` and `assets/editor.js`.
+
+- A thin column of short dashes at the left edge, one per heading. Sub-headings are shorter, and the section in view has a longer blue dash.
+- Hovering or clicking the rail opens a floating list of the real headings, with the current one filled. A click scrolls there, and arrow keys move through the list.
+- It shows how long the document is and where you are without taking any space. Below 1080px it hides.
+- Use it from about six headings up. Fewer, and the headings themselves are enough.
+
 ## Section labels
 
 `.section-label` sticks to the top until the next section takes over, so a reader always knows which part they are in. Use it for long pieces with real chapters, not on short ones.

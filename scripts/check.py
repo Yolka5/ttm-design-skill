@@ -64,6 +64,7 @@ USE_ONLY = [
     (lambda c, a: bool(c & {"picks", "pick", "seg"}), "tabs or segmented picker"),
     (lambda c, a: "ctl" in c or a.get("type") == "range", "slider"),
     (lambda c, a: "prose" in c, "narrow article column"),
+    (lambda c, a: bool(c & {"dock", "etable", "selbar", "outline"}), "editor part"),
 ]
 VOID = {"area", "base", "br", "col", "embed", "hr", "img", "input", "link", "meta", "source", "track", "wbr"}
 SOFT_TEXT = re.compile(r"muted|soft|secondary|caption|hint|subtle|faded|dim", re.I)

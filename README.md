@@ -31,6 +31,7 @@ Then ask Claude to build or restyle anything for the web. The skill loads by its
 | `references/use/` | Tool and Read modes. |
 | `references/show/` | Stage mode, art direction, brand and motion. |
 | `assets/` | Tokens, controls, the motion kit, Show parts and starter templates. |
+| `assets/editor.*`, `assets/sketch.js` | Editor parts modelled on Claude's own tools, and a hand-drawn SVG style. |
 | `scripts/check.py` | Checks a page for the banned list, contrast and mixing. Python 3. |
 | `scripts/shoot.mjs` | Screenshots a page at desktop and phone width. Node 22 and Chrome. |
 | `scripts/collage.py`, `scripts/ground.py` | Image tools. Need Pillow, and OpenCV for collages. |
@@ -39,6 +40,7 @@ Then ask Claude to build or restyle anything for the web. The skill loads by its
 
 - The Show patterns come from the Tomer Tamir Machinery website. Its own colours and fonts stay out of the library.
 - `references/shared/craft.md` adapts Emil Kowalski's design engineering skill ([github.com/emilkowalski/skills](https://github.com/emilkowalski/skills), MIT).
+- The editor parts (`assets/editor.*`) are modelled on how Claude's own Docs and Design tools look and behave. The code and icons are written from scratch, and no Anthropic fonts or assets are included.
 - Principles were studied from NRK, Anduril and Scale. This project is not affiliated with any of them and copies none of their fonts, logos or artwork.
 
 ## License
